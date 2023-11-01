@@ -40,9 +40,6 @@ namespace Sinabro
         {
             health_ = maxHealth_;
 
-            //
-            levelUpUI_.Select(0);
-
             isLive_ = true;
         }
 

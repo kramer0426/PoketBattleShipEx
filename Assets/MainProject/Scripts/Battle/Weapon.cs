@@ -45,26 +45,18 @@ namespace Sinabro
         }
 
         //
-        public void Init(ItemData data)
+        public void Init()
         {
             //
-            name = "Weapon" + data.itemId_;
+            name = "Weapon";
             transform.parent = player_.transform;
             transform.localPosition = Vector3.zero;
 
             //
-            id_ = data.itemId_;
-            damage_ = data.baseDamage_;
-            count_ = data.baseCount_;
-
-            for (int i = 0; i < GameManager.Instance.poolManager_.prefabs_.Length; ++i)
-            {
-                if (data.projectile_ == GameManager.Instance.poolManager_.prefabs_[i])
-                {
-                    prefabId_ = i;
-                    break;
-                }
-            }
+            id_ = 0;
+            damage_ = 4;
+            count_ = 3;
+            prefabId_ = 1;
 
 
             //
@@ -77,9 +69,6 @@ namespace Sinabro
             {
                 speed_ = 0.3f;
             }
-
-            //
-            player_.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
         }
 
         //

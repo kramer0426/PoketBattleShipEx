@@ -19,6 +19,10 @@ namespace Sinabro
         private SpriteRenderer sprite_;
         private Animator anim_;
 
+        //
+        public Transform weaponRoot_;
+        private WeaponBase myWeapon_ = null;
+
 
         // 
         void Start()
@@ -28,6 +32,10 @@ namespace Sinabro
             sprite_ = GetComponent<SpriteRenderer>();
             anim_ = GetComponent<Animator>();
             scanner_ = GetComponent<Scanner>();
+
+            //
+            myWeapon_ = new WeaponMeleRotation();
+            myWeapon_.CreateWeapon(weaponRoot_);
         }
 
         //
@@ -44,6 +52,9 @@ namespace Sinabro
         {
             if (GameManager.Instance.isLive_ == false)
                 return;
+
+            if (myWeapon_ != null)
+                myWeapon_.UpdateWeapon();
 
             Vector2 moveVec = inputVec_ * speed_ * Time.deltaTime;
             rigidBody_.MovePosition(rigidBody_.position + moveVec);

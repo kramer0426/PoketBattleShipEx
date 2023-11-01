@@ -59,7 +59,7 @@ namespace Sinabro
                 {
                     GameObject newWeapon = new GameObject();
                     weapon_ = newWeapon.AddComponent<Weapon>();
-                    weapon_.Init(data_);
+                    weapon_.Init();
                 }
                 else
                 {
