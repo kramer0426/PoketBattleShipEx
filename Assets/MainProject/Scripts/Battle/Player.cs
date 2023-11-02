@@ -34,8 +34,24 @@ namespace Sinabro
             scanner_ = GetComponent<Scanner>();
 
             //
-            myWeapon_ = new WeaponMeleRotation();
+            //myWeapon_ = new WeaponMeleRotation();
+            myWeapon_ = new WeaponOneGuns();
             myWeapon_.CreateWeapon(weaponRoot_);
+        }
+
+        //
+        public void CreateUnit()
+        {
+            //
+
+            //
+            MakeStatus();
+        }
+
+        //
+        private void MakeStatus()
+        {
+
         }
 
         //

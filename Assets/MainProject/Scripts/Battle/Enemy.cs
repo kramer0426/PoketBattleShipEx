@@ -105,7 +105,7 @@ namespace Sinabro
                 spriter_.sortingOrder = 1;
                 anim_.SetBool("Dead", true);
                 GameManager.Instance.kill_++;
-                GameManager.Instance.GetExp();
+                //GameManager.Instance.GetExp();
             }
         }
 
