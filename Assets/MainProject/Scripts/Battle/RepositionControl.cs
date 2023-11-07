@@ -18,7 +18,10 @@ namespace Sinabro
             if (collision.CompareTag("Area") == false)
                 return;
 
-            Vector3 playerPos = GameManager.Instance.player_.transform.position;
+            if (GameManager.Instance.focusPlayer_ == null)
+                return;
+
+            Vector3 playerPos = GameManager.Instance.focusPlayer_.position;
             Vector3 myPos = transform.position;
 
 

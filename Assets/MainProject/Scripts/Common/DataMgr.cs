@@ -37,6 +37,20 @@ namespace Sinabro
         }
 
         //
+        public MyShipData GetMyShip(int id)
+        {
+            for (int i = 0; i < myShipList_.Count; ++i)
+            {
+                if (myShipList_[i].shipInfo_.Id == id)
+                {
+                    return myShipList_[i];
+                }
+            }
+
+            return null;
+        }
+
+        //
         public void MakePlayerAbility()
         {
             //playerTrainingInfo_ = DataMgr.Instance.GetPlayerTrainingInfo(1);
@@ -117,13 +131,13 @@ namespace Sinabro
                 shipStatusDatas_[(int)ShipStatus.Fuel] = shipInfo_.Fuel;
                 shipStatusDatas_[(int)ShipStatus.Shell] = shipInfo_.ShellCnt;
 
-                float coolTime = shipInfo_.StartFireCool - shipInfo_.MaxFireCool;
-                float finalCoolTime = shipInfo_.StartFireCool - (coolTime * (float)DataMgr.Instance.myInfo_g.myStatusLevels_[(int)MyStatus.CoolTime] * 0.01f);
+                float coolTime = (float)shipInfo_.StartFireCool - (float)shipInfo_.MaxFireCool;
+                float finalCoolTime = (float)shipInfo_.StartFireCool - (coolTime * (float)DataMgr.Instance.myInfo_g.myStatusLevels_[(int)MyStatus.CoolTime] * 0.01f);
                 shipStatusDatas_[(int)ShipStatus.CoolTime] = finalCoolTime;
 
-                shipStatusDatas_[(int)ShipStatus.DefenseSide] = defenseDatas_[(int)ShipStatus.DefenseSide];
-                shipStatusDatas_[(int)ShipStatus.DefenseTop] = defenseDatas_[(int)ShipStatus.DefenseTop];
-                shipStatusDatas_[(int)ShipStatus.DefenseTorpedo] = defenseDatas_[(int)ShipStatus.DefenseTorpedo];
+                shipStatusDatas_[(int)ShipStatus.DefenseSide] = defenseDatas_[(int)DefenseType.Side];
+                shipStatusDatas_[(int)ShipStatus.DefenseTop] = defenseDatas_[(int)DefenseType.Top];
+                shipStatusDatas_[(int)ShipStatus.DefenseTorpedo] = defenseDatas_[(int)DefenseType.Torpedo];
             }
         }
 
@@ -197,8 +211,9 @@ namespace Sinabro
 
 
         //
-        //public LocalTextExcel g_localTextExcel;
-        public ShipDataExcel g_shipDataExcel;
+        //public LocalTextExcel     g_localTextExcel;
+        public ShipDataExcel        g_shipDataExcel;
+        public EnemyShipDataExcel   g_enemyDataExcel;
 
 
 
@@ -251,6 +266,21 @@ namespace Sinabro
             return null;
         }
 
+        //-----------------------------------------------
+        // GetEnemyShipInfov
+        //-----------------------------------------------
+        public EnemyShipEntity GetEnemyShipInfo(int shipId)
+        {
+            for (int i = 0; i < g_enemyDataExcel.Sheet1.Count; ++i)
+            {
+                if (g_enemyDataExcel.Sheet1[i].Id == shipId)
+                {
+                    return g_enemyDataExcel.Sheet1[i];
+                }
+            }
+
+            return null;
+        }
 
 
         //-----------------------------------------------

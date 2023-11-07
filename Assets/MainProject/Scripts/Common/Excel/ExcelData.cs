@@ -35,9 +35,36 @@ public class ShipDataEntity
     public int Hp;
     public int Ap;
     public int StartAim;
-    public float StartFireCool;
+    public double StartFireCool;
     public float MaxFireCool;
     public int MaxDefense;
+    public int Fuel;
+    public int ShellSize;
+    public int ShellCnt;
+    public float Range;
+    public float MoveSpeed;
+    public int AttackType;
+    public int AttackCnt;
+    public string ResourceName;
+
+}
+
+//
+// EnemyShipEntity
+//
+[System.Serializable]
+public class EnemyShipEntity
+{
+    public int Id;
+    public string Name;
+    public string Class;
+    public int Hp;
+    public int Ap;
+    public int Aim;
+    public float FireCool;
+    public int SideDp;
+    public int TopDp;
+    public int TorepedoDp;
     public int Fuel;
     public int ShellSize;
     public int ShellCnt;

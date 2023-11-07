@@ -7,11 +7,12 @@ namespace Sinabro
     public class Enemy : MonoBehaviour
     {
         //
-        public float                        speed_;
-        public double                       health_;
-        public double                       maxHealth_;
         public RuntimeAnimatorController[]  animControl_;
         public Rigidbody2D                  target_;
+        private PooledObject                pooledObject_;
+        private HpBarControl                hpBar_;
+        public Scanner                      scanner_;
+
 
         //
         private bool            isLive_ = false;
@@ -22,6 +23,16 @@ namespace Sinabro
         private Animator        anim_;
 
         private WaitForFixedUpdate wait_;
+
+        //
+        public Transform weaponRoot_;
+        private WeaponBase myWeapon_ = null;
+
+        //
+        [Header("# Enemy Info")]
+        public EnemyShipEntity  enemyShipInfo_;
+        public double[]         shipStatusDatas_ = new double[(int)ShipStatus.MAX];
+        public int              maxHp_;
 
         private void Awake()
         {
@@ -37,16 +48,26 @@ namespace Sinabro
             if (GameManager.Instance.isLive_ == false)
                 return;
 
+            target_ = scanner_.nearestRigidbodyTarget_;
+
             if (target_ == null)
                 return;
 
             if (isLive_ == false || anim_.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
                 return;
 
-            Vector2 dirVec = target_.position - rigid_.position;
-            Vector2 nextVec = dirVec.normalized * speed_ * Time.fixedDeltaTime;
-            rigid_.MovePosition(rigid_.position + nextVec);
-            rigid_.velocity = Vector2.zero;
+            if (Vector3.Distance(target_.position, rigid_.position) > enemyShipInfo_.Range - 0.01f)
+            {
+                Vector2 dirVec = target_.position - rigid_.position;
+                Vector2 nextVec = dirVec.normalized * (float)shipStatusDatas_[(int)ShipStatus.MoveSpeed] * Time.fixedDeltaTime;
+                rigid_.MovePosition(rigid_.position + nextVec);
+                rigid_.velocity = Vector2.zero;
+            }
+            else
+            {
+                if (myWeapon_ != null)
+                    myWeapon_.UpdateWeapon();
+            }
         }
 
         private void LateUpdate()
@@ -60,29 +81,55 @@ namespace Sinabro
             if (isLive_ == false)
                 return;
 
-            spriter_.flipX = target_.position.x < rigid_.position.x;
+            spriter_.flipX = target_.position.x > rigid_.position.x;
         }
 
         //
         private void OnEnable()
         {
-            target_ = GameManager.Instance.player_.GetComponent<Rigidbody2D>();
+            pooledObject_ = GetComponent<PooledObject>();
             isLive_ = true;
             coll_.enabled = true;
             rigid_.simulated = true;
             spriter_.sortingOrder = 2;
-            anim_.SetBool("Dead", false);
-            health_ = maxHealth_;
+            //anim_.SetBool("Dead", false);
         }
 
         //
-        public void Init(SpwanData data)
+        public void CleateUnit(EnemyShipEntity enemyShipInfo, HpBarControl hpBar)
         {
-            anim_.runtimeAnimatorController = animControl_[data.spriteType_];
-            speed_ = data.speed_;
-            maxHealth_ = data.health_;
-            health_ = data.health_;
+            //
+            hpBar_ = hpBar;
+
+            //
+            anim_.runtimeAnimatorController = animControl_[0];
+
+            //
+            enemyShipInfo_ = enemyShipInfo;
+            shipStatusDatas_[(int)ShipStatus.HP] = enemyShipInfo.Hp;
+            shipStatusDatas_[(int)ShipStatus.AP] = enemyShipInfo.Ap;
+            shipStatusDatas_[(int)ShipStatus.Aim] = enemyShipInfo.Aim;
+            shipStatusDatas_[(int)ShipStatus.CoolTime] = enemyShipInfo.FireCool;
+            shipStatusDatas_[(int)ShipStatus.Range] = enemyShipInfo.Range;
+            shipStatusDatas_[(int)ShipStatus.DefenseSide] = enemyShipInfo.SideDp;
+            shipStatusDatas_[(int)ShipStatus.DefenseTop] = enemyShipInfo.TopDp;
+            shipStatusDatas_[(int)ShipStatus.DefenseTorpedo] = enemyShipInfo.TorepedoDp;
+            shipStatusDatas_[(int)ShipStatus.MoveSpeed] = enemyShipInfo.MoveSpeed;
+            shipStatusDatas_[(int)ShipStatus.Fuel] = enemyShipInfo.Fuel;
+            shipStatusDatas_[(int)ShipStatus.Shell] = enemyShipInfo.ShellCnt;
+            scanner_.scanRange_ = (float)shipStatusDatas_[(int)ShipStatus.Range];
+            maxHp_ = enemyShipInfo.Hp;
+
+            hpBar_.UpdateHp((int)shipStatusDatas_[(int)ShipStatus.HP], maxHp_);
+
+            //
+            myWeapon_ = new WeaponOneGuns();
+            myWeapon_.CreateWeapon(weaponRoot_, false, (AttackType)enemyShipInfo.AttackType, gameObject);
+
+            //
+            spriter_.sprite = Resources.Load<Sprite>("ShipImg/" + enemyShipInfo.ResourceName);
         }
+
 
         //
         private void OnTriggerEnter2D(Collider2D collision)
@@ -90,37 +137,49 @@ namespace Sinabro
             if (collision.CompareTag("Bullet") == false || isLive_ == false)
                 return;
 
-            health_ -= collision.GetComponent<Bullet>().damage_;
-            StartCoroutine(KnockBack());
+            Bullet bullet = collision.GetComponent<Bullet>();
+            if (bullet != null)
+            {
+                if (bullet.bPlayer_ == true)
+                {
+                    shipStatusDatas_[(int)ShipStatus.HP] -= bullet.damage_;
+                    hpBar_.UpdateHp((int)shipStatusDatas_[(int)ShipStatus.HP], maxHp_);
+                    //StartCoroutine(KnockBack());
 
-            if (health_ > 0)
-            {
-                anim_.SetTrigger("Hit");
+                    if (shipStatusDatas_[(int)ShipStatus.HP] > 0)
+                    {
+                        //anim_.SetTrigger("Hit");
+                    }
+                    else
+                    {
+                        isLive_ = false;
+                        coll_.enabled = false;
+                        rigid_.simulated = false;
+                        spriter_.sortingOrder = 1;
+                        //anim_.SetBool("Dead", true);
+                        GameManager.Instance.kill_++;
+                    }
+
+                    //bullet.DieBullet();
+                }
             }
-            else
-            {
-                isLive_ = false;
-                coll_.enabled = false;
-                rigid_.simulated = false;
-                spriter_.sortingOrder = 1;
-                anim_.SetBool("Dead", true);
-                GameManager.Instance.kill_++;
-                //GameManager.Instance.GetExp();
-            }
+
+
         }
 
-        IEnumerator KnockBack()
-        {
-            yield return wait_;
+        //IEnumerator KnockBack()
+        //{
+        //    yield return wait_;
 
-            Vector3 playerPos = GameManager.Instance.player_.transform.position;
-            Vector3 dirVec = transform.position - playerPos;
-            rigid_.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
-        }
+        //    Vector3 playerPos = GameManager.Instance.player_.transform.position;
+        //    Vector3 dirVec = transform.position - playerPos;
+        //    rigid_.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
+        //}
 
+        //
         private void Dead()
         {
-            this.gameObject.SetActive(false);
+            pooledObject_.pool.ReturnObject(gameObject);
         }
     }
 }

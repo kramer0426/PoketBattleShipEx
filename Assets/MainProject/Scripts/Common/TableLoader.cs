@@ -10,8 +10,8 @@ namespace Sinabro
     public class TableLoader : MonoBehaviour
     {
         //[SerializeField] LocalTextExcel localTextExcel_;
-        [SerializeField] ShipDataExcel shipDataExcel_;
-
+        [SerializeField] ShipDataExcel      shipDataExcel_;
+        [SerializeField] EnemyShipDataExcel enemyDataExcel_;
 
 
         void Start()
@@ -25,6 +25,7 @@ namespace Sinabro
             //
             //DataMgr.Instance.g_localTextExcel = localTextExcel_;
             DataMgr.Instance.g_shipDataExcel = shipDataExcel_;
+            DataMgr.Instance.g_enemyDataExcel = enemyDataExcel_;
 
 
 

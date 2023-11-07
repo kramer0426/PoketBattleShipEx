@@ -11,11 +11,13 @@ namespace Sinabro
         public LayerMask        targetLayer_;
         public RaycastHit2D[]   targets_;
         public Transform        nearestTarget_;
+        public Rigidbody2D      nearestRigidbodyTarget_ = null;
 
         //
         private void FixedUpdate()
         {
             targets_ = Physics2D.CircleCastAll(transform.position, scanRange_, Vector2.zero, 0, targetLayer_);
+            nearestRigidbodyTarget_ = null;
             nearestTarget_ = GetNearest();
         }
 
@@ -23,6 +25,7 @@ namespace Sinabro
         private Transform GetNearest()
         {
             Transform result = null;
+
             float diff = 100.0f;
             Vector3 myPos = transform.position;
             Vector3 targetPos;
@@ -35,6 +38,7 @@ namespace Sinabro
                 {
                     diff = curDiff;
                     result = targets_[i].transform;
+                    nearestRigidbodyTarget_ = targets_[i].rigidbody;
                 }
             }
 

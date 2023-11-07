@@ -50,14 +50,14 @@ namespace Sinabro
         //
         private void Spwan()
         {
-            GameObject enemy = GameManager.Instance.poolManager_.GetObject(0);
+            GameObject enemy = ObjectMgr.Instance.GetEnemy();
             if (enemy != null)
             {
                 enemy.transform.position = spawnPoint_[Random.Range(1, spawnPoint_.Length)].position;
                 Enemy enemyInst = enemy.GetComponent<Enemy>();
                 if (enemyInst != null)
                 {
-                    enemyInst.Init(spawnDatas_[level_]);
+   
                 }
             }
         }

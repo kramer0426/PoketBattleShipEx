@@ -21,7 +21,8 @@ namespace Sinabro
         //
         private void FixedUpdate()
         {
-            rect_.position = mainCamera_.WorldToScreenPoint(GameManager.Instance.player_.transform.position);
+            if (GameManager.Instance.focusPlayer_ != null)
+                rect_.position = mainCamera_.WorldToScreenPoint(GameManager.Instance.focusPlayer_.position);
         }
     }
 }

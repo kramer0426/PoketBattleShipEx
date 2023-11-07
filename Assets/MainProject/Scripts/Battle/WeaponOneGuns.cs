@@ -8,25 +8,25 @@ namespace Sinabro
     {
         //
         private float timer_ = 0;
-        private Player player_ = null;
+        private Scanner scanner_;
 
         //----------------------------------------------
         // CreateWeapon
         //----------------------------------------------
-        public override void CreateWeapon(Transform myTransform)
+        public override void CreateWeapon(Transform myTransform, bool bPlayer, AttackType attackType, GameObject owner)
         {
             myTransform_ = myTransform;
-
-            player_ = GameManager.Instance.player_;
-            myTransform_.parent = player_.transform;
+            myTransform_.parent = owner.transform;
             myTransform_.localPosition = Vector3.zero;
+
+            scanner_ = owner.GetComponent<Scanner>();
 
             //
             id_ = 1;
             damage_ = 4;
-            count_ = 3;
-            prefabId_ = 2;
-            speed_ = 0.3f;
+            bPlayer_ = bPlayer;
+            attackType_ = attackType;
+            coolTime_ = 1.0f;
 
         }
 
@@ -36,7 +36,7 @@ namespace Sinabro
         public override void UpdateWeapon()
         {
             timer_ += Time.deltaTime;
-            if (timer_ > speed_)
+            if (timer_ > coolTime_)
             {
                 timer_ = 0;
                 Fire();
@@ -46,17 +46,25 @@ namespace Sinabro
         //
         private void Fire()
         {
-            if (player_.scanner_.nearestTarget_ == null)
+            if (scanner_ == null)
                 return;
 
-            Vector3 targetPos = player_.scanner_.nearestTarget_.position;
+            if (scanner_.nearestTarget_ == null)
+                return;
+
+            Vector3 targetPos = scanner_.nearestTarget_.position;
             Vector3 dir = targetPos - myTransform_.position;
             dir = dir.normalized;
 
-            Transform bullet = GameManager.Instance.poolManager_.GetObject(prefabId_).transform;
-            bullet.position = myTransform_.position;
-            bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-            bullet.GetComponent<Bullet>().Init(damage_, count_, dir);
+            GameObject bulletObj = ObjectMgr.Instance.GetBullet();
+            Bullet bullet = bulletObj.GetComponent<Bullet>();
+            if (bullet != null)
+            {
+                Transform bulletTransform = bullet.transform;
+                bulletTransform.position = myTransform_.position;
+                bulletTransform.transform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+                bullet.Init(damage_, bPlayer_, attackType_, dir);
+            }
         }
     }
 }

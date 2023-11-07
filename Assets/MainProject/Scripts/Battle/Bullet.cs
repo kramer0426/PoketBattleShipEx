@@ -7,11 +7,12 @@ namespace Sinabro
     public class Bullet : MonoBehaviour
     {
         //
-        public double   damage_;
-        public int      per_;
+        public double       damage_;
+        public bool         bPlayer_;
+        public AttackType   attackType_;
 
         private Rigidbody2D rigid_;
-
+        private PooledObject pooledObject_;
 
         private void Awake()
         {
@@ -19,39 +20,30 @@ namespace Sinabro
         }
 
         //
-        public void Init(double damage, int per, Vector3 dir)
+        public void Init(double damage, bool bPlayer, AttackType attackType, Vector3 dir)
         {
-            damage_ = damage;
-            per_ = per;
+            pooledObject_ = GetComponent<PooledObject>();
 
-            if (per >= 0)
-            {
-                rigid_.velocity = dir * 15.0f;
-            }
+            damage_ = damage;
+            bPlayer_ = bPlayer;
+            attackType_ = attackType;
+            rigid_.velocity = dir * 15.0f;
+            
         }
 
         //
-        private void OnTriggerEnter2D(Collider2D collision)
+        public void DieBullet()
         {
-            if (collision.CompareTag("Enemy") == false || per_ == -100)
-                return;
-
-            per_--;
-
-            if (per_ < 0)
-            {
-                rigid_.velocity = Vector2.zero;
-                gameObject.SetActive(false);
-            }
+            //pooledObject_.pool.ReturnObject(gameObject);
         }
 
         //
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (collision.CompareTag("Area") == false || per_ == -100)
+            if (collision.CompareTag("Area") == false)
                 return;
 
-            gameObject.SetActive(false);
+            pooledObject_.pool.ReturnObject(gameObject);
         }
     }
 }

@@ -9,15 +9,15 @@ namespace Sinabro
         // 
         public Transform myTransform_;
         public int id_;
-        public int prefabId_;
         public double damage_;
-        public int count_;
-        public float speed_;
+        public bool bPlayer_;
+        public AttackType attackType_;
+        public float coolTime_;
 
         //----------------------------------------------
         // CreateWeapon
         //----------------------------------------------
-        public virtual void CreateWeapon(Transform myTransform) { }
+        public virtual void CreateWeapon(Transform myTransform, bool bPlayer, AttackType attackType, GameObject owner) { }
 
         //----------------------------------------------
         // UpdateWeapon

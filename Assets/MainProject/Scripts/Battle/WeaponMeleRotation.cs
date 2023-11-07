@@ -6,37 +6,44 @@ namespace Sinabro
 {
     public class WeaponMeleRotation : WeaponBase
     {
+        //
+        private float speed_;
+
         //----------------------------------------------
         // CreateWeapon
         //----------------------------------------------
-        public override void CreateWeapon(Transform myTransform)
+        public override void CreateWeapon(Transform myTransform, bool bPlayer, AttackType attackType, GameObject owner)
         {
             myTransform_ = myTransform;
 
-            myTransform_.parent = GameManager.Instance.player_.transform;
+            myTransform_.parent = owner.transform;
             myTransform_.localPosition = Vector3.zero;
 
             //
             id_ = 0;
             damage_ = 4;
-            count_ = 3;
-            prefabId_ = 1;
+            bPlayer_ = bPlayer;
+            attackType_ = attackType;
             speed_ = 150.0f;
+            int count = 3;
 
-            for (int i = 0; i < count_; ++i)
+            for (int i = 0; i < count; ++i)
             {
-                Transform bullet;
-                bullet = GameManager.Instance.poolManager_.GetObject(prefabId_).transform;
-                bullet.parent = myTransform_;
-                
-                bullet.localPosition = Vector3.zero;
-                bullet.localRotation = Quaternion.identity;
+                Bullet bullet = ObjectMgr.Instance.GetBullet().GetComponent<Bullet>();
+                if (bullet != null)
+                {
+                    Transform bulletTransform = bullet.transform;
+                    bulletTransform.transform.parent = myTransform_;
 
-                Vector3 rotVec = Vector3.forward * 360 * i / count_;
-                bullet.Rotate(rotVec);
-                bullet.Translate(bullet.up * 1.5f, Space.World);
+                    bulletTransform.transform.localPosition = Vector3.zero;
+                    bulletTransform.transform.localRotation = Quaternion.identity;
 
-                bullet.GetComponent<Bullet>().Init(damage_, -100, Vector3.zero);
+                    Vector3 rotVec = Vector3.forward * 360 * i / count;
+                    bulletTransform.Rotate(rotVec);
+                    bulletTransform.Translate(bulletTransform.up * 1.5f, Space.World);
+
+                    bullet.Init(damage_, bPlayer_, attackType_, Vector3.zero);
+                }
             }
         }
 
