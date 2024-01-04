@@ -126,7 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage_: 100
-  per_: 0
+  bPlayer_: 0
+  attackType_: 0
 --- !u!50 &-6343410793032350246
 Rigidbody2D:
   serializedVersion: 4

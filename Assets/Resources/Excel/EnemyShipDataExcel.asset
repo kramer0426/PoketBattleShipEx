@@ -26,7 +26,7 @@ MonoBehaviour:
     Fuel: 100
     ShellSize: 0
     ShellCnt: 100
-    Range: 5
+    Range: 3
     MoveSpeed: 4
     AttackType: 0
     AttackCnt: 1
@@ -44,7 +44,7 @@ MonoBehaviour:
     Fuel: 100
     ShellSize: 0
     ShellCnt: 100
-    Range: 2
+    Range: 3
     MoveSpeed: 4
     AttackType: 0
     AttackCnt: 1
@@ -62,7 +62,7 @@ MonoBehaviour:
     Fuel: 100
     ShellSize: 0
     ShellCnt: 100
-    Range: 2
+    Range: 3
     MoveSpeed: 4
     AttackType: 0
     AttackCnt: 1
@@ -80,7 +80,7 @@ MonoBehaviour:
     Fuel: 100
     ShellSize: 0
     ShellCnt: 100
-    Range: 2
+    Range: 3
     MoveSpeed: 4
     AttackType: 0
     AttackCnt: 1

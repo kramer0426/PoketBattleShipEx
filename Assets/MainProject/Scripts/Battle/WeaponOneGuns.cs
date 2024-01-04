@@ -16,8 +16,6 @@ namespace Sinabro
         public override void CreateWeapon(Transform myTransform, bool bPlayer, AttackType attackType, GameObject owner)
         {
             myTransform_ = myTransform;
-            myTransform_.parent = owner.transform;
-            myTransform_.localPosition = Vector3.zero;
 
             scanner_ = owner.GetComponent<Scanner>();
 
@@ -56,7 +54,16 @@ namespace Sinabro
             Vector3 dir = targetPos - myTransform_.position;
             dir = dir.normalized;
 
-            GameObject bulletObj = ObjectMgr.Instance.GetBullet();
+            GameObject bulletObj = null;
+            if (bPlayer_ == true)
+            {
+                bulletObj = ObjectMgr.Instance.GetBullet(0);
+            }
+            else
+            {
+                bulletObj = ObjectMgr.Instance.GetBullet(1);
+            }
+
             Bullet bullet = bulletObj.GetComponent<Bullet>();
             if (bullet != null)
             {

@@ -34,11 +34,14 @@ namespace Sinabro
                 targetPos = targets_[i].transform.position;
                 float curDiff = Vector3.Distance(myPos, targetPos);
 
-                if (curDiff < diff)
+                if (curDiff <= scanRange_)
                 {
-                    diff = curDiff;
-                    result = targets_[i].transform;
-                    nearestRigidbodyTarget_ = targets_[i].rigidbody;
+                    if (curDiff < diff)
+                    {
+                        diff = curDiff;
+                        result = targets_[i].transform;
+                        nearestRigidbodyTarget_ = targets_[i].rigidbody;
+                    }
                 }
             }
 

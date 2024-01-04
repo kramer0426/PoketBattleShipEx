@@ -15,8 +15,6 @@ namespace Sinabro
 
 
         //
-        private bool            isLive_ = false;
-
         private Rigidbody2D     rigid_;
         private Collider2D      coll_;
         private SpriteRenderer  spriter_;
@@ -48,13 +46,16 @@ namespace Sinabro
             if (GameManager.Instance.isLive_ == false)
                 return;
 
-            target_ = scanner_.nearestRigidbodyTarget_;
+            //target_ = scanner_.nearestRigidbodyTarget_;
 
             if (target_ == null)
                 return;
 
-            if (isLive_ == false || anim_.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+            if (anim_.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
                 return;
+
+            if (myWeapon_ != null)
+                myWeapon_.UpdateWeapon();
 
             if (Vector3.Distance(target_.position, rigid_.position) > enemyShipInfo_.Range - 0.01f)
             {
@@ -63,11 +64,7 @@ namespace Sinabro
                 rigid_.MovePosition(rigid_.position + nextVec);
                 rigid_.velocity = Vector2.zero;
             }
-            else
-            {
-                if (myWeapon_ != null)
-                    myWeapon_.UpdateWeapon();
-            }
+
         }
 
         private void LateUpdate()
@@ -78,26 +75,18 @@ namespace Sinabro
             if (target_ == null)
                 return;
 
-            if (isLive_ == false)
-                return;
 
             spriter_.flipX = target_.position.x > rigid_.position.x;
         }
 
         //
-        private void OnEnable()
-        {
-            pooledObject_ = GetComponent<PooledObject>();
-            isLive_ = true;
-            coll_.enabled = true;
-            rigid_.simulated = true;
-            spriter_.sortingOrder = 2;
-            //anim_.SetBool("Dead", false);
-        }
-
-        //
         public void CleateUnit(EnemyShipEntity enemyShipInfo, HpBarControl hpBar)
         {
+            pooledObject_ = GetComponent<PooledObject>();
+
+            //
+            target_ = GameManager.Instance.targetPlayer_;
+
             //
             hpBar_ = hpBar;
 
@@ -134,7 +123,7 @@ namespace Sinabro
         //
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareTag("Bullet") == false || isLive_ == false)
+            if (collision.CompareTag("Bullet") == false || GameManager.Instance.isLive_ == false)
                 return;
 
             Bullet bullet = collision.GetComponent<Bullet>();
@@ -146,21 +135,17 @@ namespace Sinabro
                     hpBar_.UpdateHp((int)shipStatusDatas_[(int)ShipStatus.HP], maxHp_);
                     //StartCoroutine(KnockBack());
 
+
                     if (shipStatusDatas_[(int)ShipStatus.HP] > 0)
                     {
                         //anim_.SetTrigger("Hit");
                     }
                     else
                     {
-                        isLive_ = false;
-                        coll_.enabled = false;
-                        rigid_.simulated = false;
-                        spriter_.sortingOrder = 1;
                         //anim_.SetBool("Dead", true);
-                        GameManager.Instance.kill_++;
                     }
 
-                    //bullet.DieBullet();
+                    bullet.DieBullet();
                 }
             }
 

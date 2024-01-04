@@ -59,8 +59,8 @@ namespace Sinabro
             hpBar_.UpdateHp((int)shipStatusDatas_[(int)ShipStatus.HP], maxHp_);
 
             //
-            //myWeapon_ = new WeaponOneGuns();
-            //myWeapon_.CreateWeapon(weaponRoot_, true, (AttackType)shipData_.shipInfo_.AttackType, gameObject);
+            myWeapon_ = new WeaponOneGuns();
+            myWeapon_.CreateWeapon(weaponRoot_, true, (AttackType)shipData_.shipInfo_.AttackType, gameObject);
 
             //
             sprite_.sprite = Resources.Load<Sprite>("ShipImg/" + shipData_.shipInfo_.ResourceName);
@@ -121,8 +121,6 @@ namespace Sinabro
                 {
                     shipStatusDatas_[(int)ShipStatus.HP] -= bullet.damage_;
                     hpBar_.UpdateHp((int)shipStatusDatas_[(int)ShipStatus.HP], maxHp_);
-
-                    Debug.Log("Player hit!!!!");
 
                     if (shipStatusDatas_[(int)ShipStatus.HP] > 0)
                     {

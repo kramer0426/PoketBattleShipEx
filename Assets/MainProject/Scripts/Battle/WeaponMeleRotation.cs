@@ -29,7 +29,7 @@ namespace Sinabro
 
             for (int i = 0; i < count; ++i)
             {
-                Bullet bullet = ObjectMgr.Instance.GetBullet().GetComponent<Bullet>();
+                Bullet bullet = ObjectMgr.Instance.GetBullet(0).GetComponent<Bullet>();
                 if (bullet != null)
                 {
                     Transform bulletTransform = bullet.transform;

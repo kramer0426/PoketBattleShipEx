@@ -13,7 +13,7 @@ namespace Sinabro
         //
         public ObjectPool playerPools_;
         public ObjectPool enemyPools_;
-        public ObjectPool bulletPools_;
+        public ObjectPool[] bulletPools_;
 
         //-----------------------------------------------
         // Instance
@@ -32,7 +32,8 @@ namespace Sinabro
             //
             playerPools_.Initialize();
             enemyPools_.Initialize();
-            bulletPools_.Initialize();
+            bulletPools_[0].Initialize();
+            bulletPools_[1].Initialize();
         }
 
         //
@@ -48,9 +49,9 @@ namespace Sinabro
         }
 
         //
-        public GameObject GetBullet()
+        public GameObject GetBullet(int index)
         {
-            return bulletPools_.GetObject();
+            return bulletPools_[index].GetObject();
         }
 
     }
