@@ -1,5 +1,55 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1016247249914476013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 57445685456273946}
+  - component: {fileID: 3944301770753672055}
+  m_Layer: 7
+  m_Name: FireScanner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &57445685456273946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016247249914476013}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6272891078359912768}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3944301770753672055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016247249914476013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93fc0129c1c282748b46485698f87935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scanRange_: 0
+  targetLayer_:
+    serializedVersion: 2
+    m_Bits: 64
+  nearestTarget_: {fileID: 0}
+  nearestRigidbodyTarget_: {fileID: 0}
 --- !u!1 &6272891077141477483
 GameObject:
   m_ObjectHideFlags: 0
@@ -129,7 +179,6 @@ GameObject:
   - component: {fileID: 6272891078359912783}
   - component: {fileID: 6272891078359912771}
   - component: {fileID: 6272891078359912773}
-  - component: {fileID: 6272891078359912772}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -151,6 +200,8 @@ Transform:
   m_Children:
   - {fileID: 6272891077358284910}
   - {fileID: 6272891077141477482}
+  - {fileID: 57445685456273946}
+  - {fileID: 6266163403176898552}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -257,7 +308,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputVec_: {x: 0, y: 0}
   speed_: 0
-  scanner_: {fileID: 0}
+  fireScanner_: {fileID: 3944301770753672055}
+  sightScanner_: {fileID: 8644370954603580193}
+  aiType_: 0
+  rigidBody_: {fileID: 0}
+  sprite_: {fileID: 0}
   weaponRoot_: {fileID: 6272891077141477482}
   shipData_:
     shipInfo_:
@@ -273,11 +328,13 @@ MonoBehaviour:
       Fuel: 0
       ShellSize: 0
       ShellCnt: 0
-      Range: 0
+      SightRange: 0
+      FireRange: 0
       MoveSpeed: 0
       AttackType: 0
       AttackCnt: 0
       ResourceName: 
+    fleetIndex_: 0
     defenseDatas_: 000000000000000000000000
     shipStatusDatas_:
     - 0
@@ -292,6 +349,7 @@ MonoBehaviour:
     - 0
     - 0
   shipStatusDatas_:
+  - 0
   - 0
   - 0
   - 0
@@ -325,19 +383,51 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6272891078359912772
+--- !u!1 &7831676346011286393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6266163403176898552}
+  - component: {fileID: 8644370954603580193}
+  m_Layer: 7
+  m_Name: SightScanner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6266163403176898552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7831676346011286393}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6272891078359912768}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8644370954603580193
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6272891078359912780}
+  m_GameObject: {fileID: 7831676346011286393}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93fc0129c1c282748b46485698f87935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scanRange_: 5
+  scanRange_: 0
   targetLayer_:
     serializedVersion: 2
     m_Bits: 64

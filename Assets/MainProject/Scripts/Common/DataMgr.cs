@@ -101,6 +101,7 @@ namespace Sinabro
         //
         public ShipDataEntity   shipInfo_;
 
+        public int              fleetIndex_;
         public int[]            defenseDatas_ = new int[(int)DefenseType.MAX];
         public double[]         shipStatusDatas_ = new double[(int)ShipStatus.MAX];
 
@@ -126,7 +127,8 @@ namespace Sinabro
                 shipStatusDatas_[(int)ShipStatus.HP] = shipInfo_.Hp;
                 shipStatusDatas_[(int)ShipStatus.AP] = shipInfo_.Ap;
                 shipStatusDatas_[(int)ShipStatus.Aim] = shipInfo_.StartAim + DataMgr.Instance.myInfo_g.myStatusLevels_[(int)MyStatus.Aim];
-                shipStatusDatas_[(int)ShipStatus.Range] = shipInfo_.Range;
+                shipStatusDatas_[(int)ShipStatus.FireRange] = shipInfo_.FireRange;
+                shipStatusDatas_[(int)ShipStatus.SightRange] = shipInfo_.SightRange;
                 shipStatusDatas_[(int)ShipStatus.MoveSpeed] = shipInfo_.MoveSpeed;
                 shipStatusDatas_[(int)ShipStatus.Fuel] = shipInfo_.Fuel;
                 shipStatusDatas_[(int)ShipStatus.Shell] = shipInfo_.ShellCnt;

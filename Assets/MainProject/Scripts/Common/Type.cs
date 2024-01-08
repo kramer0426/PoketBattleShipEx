@@ -12,13 +12,14 @@ namespace Sinabro
         AP = 1,
         Aim = 2,
         CoolTime = 3,
-        Range = 4,
-        DefenseSide = 5,
-        DefenseTop = 6,
-        DefenseTorpedo = 7,
-        MoveSpeed = 8,
-        Fuel = 9,
-        Shell = 10,
+        SightRange = 4,
+        FireRange = 5,
+        DefenseSide = 6,
+        DefenseTop = 7,
+        DefenseTorpedo = 8,
+        MoveSpeed = 9,
+        Fuel = 10,
+        Shell = 11,
         MAX
     }
 

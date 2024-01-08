@@ -41,7 +41,8 @@ public class ShipDataEntity
     public int Fuel;
     public int ShellSize;
     public int ShellCnt;
-    public float Range;
+    public float SightRange;
+    public float FireRange;
     public float MoveSpeed;
     public int AttackType;
     public int AttackCnt;
@@ -68,7 +69,8 @@ public class EnemyShipEntity
     public int Fuel;
     public int ShellSize;
     public int ShellCnt;
-    public float Range;
+    public float SightRange;
+    public float FireRange;
     public float MoveSpeed;
     public int AttackType;
     public int AttackCnt;

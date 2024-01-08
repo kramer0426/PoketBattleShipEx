@@ -13,11 +13,11 @@ namespace Sinabro
         //----------------------------------------------
         // CreateWeapon
         //----------------------------------------------
-        public override void CreateWeapon(Transform myTransform, bool bPlayer, AttackType attackType, GameObject owner)
+        public override void CreateWeapon(Transform myTransform, bool bPlayer, AttackType attackType, GameObject owner, Scanner scanner)
         {
             myTransform_ = myTransform;
 
-            scanner_ = owner.GetComponent<Scanner>();
+            scanner_ = scanner;
 
             //
             id_ = 1;
@@ -25,7 +25,6 @@ namespace Sinabro
             bPlayer_ = bPlayer;
             attackType_ = attackType;
             coolTime_ = 1.0f;
-
         }
 
         //----------------------------------------------

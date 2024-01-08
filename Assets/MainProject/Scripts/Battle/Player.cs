@@ -12,18 +12,22 @@ namespace Sinabro
         public float speed_;
 
         //
-        public Scanner scanner_;
+        public Scanner fireScanner_;
+        public Scanner sightScanner_;
+        public AIStateBase aiState_;
+        public List<AIStateBase> aiStateList_ = new List<AIStateBase>();
+        public AIType aiType_;
 
         //
         private PooledObject    pooledObject_;
-        private Rigidbody2D     rigidBody_;
-        private SpriteRenderer  sprite_;
+        public Rigidbody2D      rigidBody_;
+        public SpriteRenderer   sprite_;
         private Animator        anim_;
         private HpBarControl    hpBar_;
 
         //
         public Transform weaponRoot_;
-        private WeaponBase myWeapon_ = null;
+        public WeaponBase myWeapon_ = null;
 
         //
         [Header("# Player Info")]
@@ -41,11 +45,25 @@ namespace Sinabro
         //
         public void CreateUnit(MyShipData shipData, HpBarControl hpBar)
         {
+            //
+            aiType_ = AIType.Normal;
+            aiStateList_.Clear();
+            aiStateList_.Add(new AIPatrolState());
+            aiStateList_.Add(new AIChaseState());
+            aiStateList_.Add(new AIAttackState());
+            aiStateList_.Add(new AIDefenseState());
+            aiStateList_.Add(new AIDeadState());
+            for (int i = 0; i < aiStateList_.Count; ++i)
+            {
+                aiStateList_[i].Initialize(gameObject, true);
+            }
+            aiState_ = aiStateList_[0];
+
+            //
             speed_ = 3.0f;
             rigidBody_ = GetComponent<Rigidbody2D>();
             sprite_ = GetComponent<SpriteRenderer>();
             anim_ = GetComponent<Animator>();
-            scanner_ = GetComponent<Scanner>();
 
             //
             hpBar_ = hpBar;
@@ -55,17 +73,24 @@ namespace Sinabro
             shipStatusDatas_ = shipData_.shipStatusDatas_;
             maxHp_ = (int)shipStatusDatas_[(int)ShipStatus.HP];
             speed_ = (float)shipStatusDatas_[(int)ShipStatus.MoveSpeed];
-            scanner_.scanRange_ = (float)shipStatusDatas_[(int)ShipStatus.Range];
+            fireScanner_.scanRange_ = (float)shipStatusDatas_[(int)ShipStatus.FireRange];
+            sightScanner_.scanRange_ = (float)shipStatusDatas_[(int)ShipStatus.SightRange];
             hpBar_.UpdateHp((int)shipStatusDatas_[(int)ShipStatus.HP], maxHp_);
 
             //
             myWeapon_ = new WeaponOneGuns();
-            myWeapon_.CreateWeapon(weaponRoot_, true, (AttackType)shipData_.shipInfo_.AttackType, gameObject);
+            myWeapon_.CreateWeapon(weaponRoot_, true, (AttackType)shipData_.shipInfo_.AttackType, gameObject, fireScanner_);
 
             //
             sprite_.sprite = Resources.Load<Sprite>("ShipImg/" + shipData_.shipInfo_.ResourceName);
         }
 
+        //
+        public void ChangeAIState(AIStateID aiState)
+        {
+            aiState_ = aiStateList_[(int)aiState];
+            aiState_.Initialize(gameObject, true);
+        }
 
         //
         void OnMove(InputValue value)
@@ -88,11 +113,8 @@ namespace Sinabro
             if (GameManager.Instance.isLive_ == false)
                 return;
 
-            if (myWeapon_ != null)
-                myWeapon_.UpdateWeapon();
-
-            Vector2 moveVec = inputVec_ * speed_ * Time.deltaTime;
-            rigidBody_.MovePosition(rigidBody_.position + moveVec);
+            //
+            aiState_.AIUpdate();
         }
 
         private void LateUpdate()
@@ -102,10 +124,6 @@ namespace Sinabro
 
             //anim_.SetFloat("Speed", inputVec_.magnitude);
 
-            if (inputVec_.x != 0)
-            {
-                sprite_.flipX = inputVec_.x < 0;
-            }
         }
 
         //

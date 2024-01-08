@@ -17,7 +17,7 @@ namespace Sinabro
         //----------------------------------------------
         // CreateWeapon
         //----------------------------------------------
-        public virtual void CreateWeapon(Transform myTransform, bool bPlayer, AttackType attackType, GameObject owner) { }
+        public virtual void CreateWeapon(Transform myTransform, bool bPlayer, AttackType attackType, GameObject owner, Scanner scanner) { }
 
         //----------------------------------------------
         // UpdateWeapon

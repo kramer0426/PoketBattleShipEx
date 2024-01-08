@@ -25,7 +25,8 @@ MonoBehaviour:
     Fuel: 100
     ShellSize: 0
     ShellCnt: 100
-    Range: 5
+    SightRange: 7
+    FireRange: 5
     MoveSpeed: 4
     AttackType: 0
     AttackCnt: 1
@@ -42,7 +43,8 @@ MonoBehaviour:
     Fuel: 100
     ShellSize: 0
     ShellCnt: 100
-    Range: 5
+    SightRange: 7
+    FireRange: 5
     MoveSpeed: 4
     AttackType: 0
     AttackCnt: 1
@@ -59,7 +61,8 @@ MonoBehaviour:
     Fuel: 100
     ShellSize: 0
     ShellCnt: 100
-    Range: 5
+    SightRange: 7
+    FireRange: 5
     MoveSpeed: 4
     AttackType: 0
     AttackCnt: 1
@@ -76,7 +79,8 @@ MonoBehaviour:
     Fuel: 100
     ShellSize: 0
     ShellCnt: 100
-    Range: 5
+    SightRange: 7
+    FireRange: 5
     MoveSpeed: 4
     AttackType: 0
     AttackCnt: 1
@@ -93,7 +97,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -110,7 +115,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -127,7 +133,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -144,7 +151,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -161,7 +169,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -178,7 +187,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -195,7 +205,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -212,7 +223,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -229,7 +241,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -246,7 +259,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -263,7 +277,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -280,7 +295,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -297,7 +313,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -314,7 +331,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 0
     AttackCnt: 2
@@ -331,7 +349,8 @@ MonoBehaviour:
     Fuel: 110
     ShellSize: 1
     ShellCnt: 110
-    Range: 3
+    SightRange: 7
+    FireRange: 3
     MoveSpeed: 3.5
     AttackType: 1
     AttackCnt: 2
@@ -348,7 +367,8 @@ MonoBehaviour:
     Fuel: 120
     ShellSize: 2
     ShellCnt: 120
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 3
@@ -365,7 +385,8 @@ MonoBehaviour:
     Fuel: 120
     ShellSize: 2
     ShellCnt: 120
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 3
@@ -382,7 +403,8 @@ MonoBehaviour:
     Fuel: 120
     ShellSize: 2
     ShellCnt: 120
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 3
@@ -399,7 +421,8 @@ MonoBehaviour:
     Fuel: 120
     ShellSize: 2
     ShellCnt: 120
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 3
@@ -416,7 +439,8 @@ MonoBehaviour:
     Fuel: 120
     ShellSize: 2
     ShellCnt: 120
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 3
@@ -433,7 +457,8 @@ MonoBehaviour:
     Fuel: 120
     ShellSize: 2
     ShellCnt: 120
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 3
@@ -450,7 +475,8 @@ MonoBehaviour:
     Fuel: 120
     ShellSize: 2
     ShellCnt: 120
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 3
@@ -467,7 +493,8 @@ MonoBehaviour:
     Fuel: 120
     ShellSize: 2
     ShellCnt: 120
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 3
@@ -484,7 +511,8 @@ MonoBehaviour:
     Fuel: 120
     ShellSize: 2
     ShellCnt: 120
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 3
@@ -501,7 +529,8 @@ MonoBehaviour:
     Fuel: 120
     ShellSize: 2
     ShellCnt: 120
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 1
     AttackCnt: 3
@@ -518,7 +547,8 @@ MonoBehaviour:
     Fuel: 120
     ShellSize: 2
     ShellCnt: 120
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 3
@@ -535,7 +565,8 @@ MonoBehaviour:
     Fuel: 130
     ShellSize: 3
     ShellCnt: 130
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 4
@@ -552,7 +583,8 @@ MonoBehaviour:
     Fuel: 130
     ShellSize: 3
     ShellCnt: 130
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 4
@@ -569,7 +601,8 @@ MonoBehaviour:
     Fuel: 130
     ShellSize: 3
     ShellCnt: 130
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 4
@@ -586,7 +619,8 @@ MonoBehaviour:
     Fuel: 130
     ShellSize: 3
     ShellCnt: 130
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 4
@@ -603,7 +637,8 @@ MonoBehaviour:
     Fuel: 130
     ShellSize: 4
     ShellCnt: 130
-    Range: 4
+    SightRange: 7
+    FireRange: 4
     MoveSpeed: 3
     AttackType: 0
     AttackCnt: 5
@@ -620,7 +655,8 @@ MonoBehaviour:
     Fuel: 140
     ShellSize: 4
     ShellCnt: 140
-    Range: 5
+    SightRange: 7
+    FireRange: 5
     MoveSpeed: 2.5
     AttackType: 0
     AttackCnt: 6
@@ -637,7 +673,8 @@ MonoBehaviour:
     Fuel: 140
     ShellSize: 4
     ShellCnt: 140
-    Range: 5
+    SightRange: 7
+    FireRange: 5
     MoveSpeed: 2.5
     AttackType: 0
     AttackCnt: 6
@@ -654,7 +691,8 @@ MonoBehaviour:
     Fuel: 140
     ShellSize: 4
     ShellCnt: 140
-    Range: 5
+    SightRange: 7
+    FireRange: 5
     MoveSpeed: 2.5
     AttackType: 0
     AttackCnt: 6
@@ -671,7 +709,8 @@ MonoBehaviour:
     Fuel: 140
     ShellSize: 4
     ShellCnt: 140
-    Range: 5
+    SightRange: 7
+    FireRange: 5
     MoveSpeed: 2.5
     AttackType: 0
     AttackCnt: 6
@@ -688,7 +727,8 @@ MonoBehaviour:
     Fuel: 140
     ShellSize: 4
     ShellCnt: 140
-    Range: 5
+    SightRange: 7
+    FireRange: 5
     MoveSpeed: 2.5
     AttackType: 0
     AttackCnt: 6

@@ -78,6 +78,7 @@ namespace Sinabro
                     playerHpBars_[0].gameObject.SetActive(true);
                     playerHpBars_[0].SetUI(playerInst.transform);
 
+                    shipData.fleetIndex_ = 0;
                     playerInst.GetComponent<Player>().CreateUnit(shipData, playerHpBars_[0]);
                 }
             }
@@ -96,7 +97,7 @@ namespace Sinabro
                         enemyHpBars_[0].gameObject.SetActive(true);
                         enemyHpBars_[0].SetUI(enemyInst.transform);
 
-                        enemyInst.CleateUnit(enemyInfo, enemyHpBars_[0]);
+                        enemyInst.CleateUnit(enemyInfo, enemyHpBars_[0], 0);
                     }
                 }
             }

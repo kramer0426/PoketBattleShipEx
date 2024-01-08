@@ -12,7 +12,7 @@ namespace Sinabro
         //----------------------------------------------
         // CreateWeapon
         //----------------------------------------------
-        public override void CreateWeapon(Transform myTransform, bool bPlayer, AttackType attackType, GameObject owner)
+        public override void CreateWeapon(Transform myTransform, bool bPlayer, AttackType attackType, GameObject owner, Scanner scanner)
         {
             myTransform_ = myTransform;
 

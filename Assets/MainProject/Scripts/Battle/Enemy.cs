@@ -11,32 +11,36 @@ namespace Sinabro
         public Rigidbody2D                  target_;
         private PooledObject                pooledObject_;
         private HpBarControl                hpBar_;
-        public Scanner                      scanner_;
-
+        public Scanner                      fireScanner_;
+        public Scanner                      sightScanner_;
+        public AIStateBase                  aiState_;
+        public List<AIStateBase>            aiStateList_ = new List<AIStateBase>();
+        public AIType                       aiType_;
 
         //
-        private Rigidbody2D     rigid_;
+        public Rigidbody2D     rigid_;
         private Collider2D      coll_;
-        private SpriteRenderer  spriter_;
+        public SpriteRenderer  sprite_;
         private Animator        anim_;
 
         private WaitForFixedUpdate wait_;
 
         //
         public Transform weaponRoot_;
-        private WeaponBase myWeapon_ = null;
+        public WeaponBase myWeapon_ = null;
 
         //
         [Header("# Enemy Info")]
         public EnemyShipEntity  enemyShipInfo_;
         public double[]         shipStatusDatas_ = new double[(int)ShipStatus.MAX];
         public int              maxHp_;
+        public int              fleetIndex_;
 
         private void Awake()
         {
             rigid_ = GetComponent<Rigidbody2D>();
             coll_ = GetComponent<Collider2D>();
-            spriter_ = GetComponent<SpriteRenderer>();
+            sprite_ = GetComponent<SpriteRenderer>();
             anim_ = GetComponent<Animator>();
             wait_ = new WaitForFixedUpdate();
         }
@@ -46,25 +50,11 @@ namespace Sinabro
             if (GameManager.Instance.isLive_ == false)
                 return;
 
-            //target_ = scanner_.nearestRigidbodyTarget_;
-
-            if (target_ == null)
-                return;
-
             if (anim_.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
                 return;
 
-            if (myWeapon_ != null)
-                myWeapon_.UpdateWeapon();
-
-            if (Vector3.Distance(target_.position, rigid_.position) > enemyShipInfo_.Range - 0.01f)
-            {
-                Vector2 dirVec = target_.position - rigid_.position;
-                Vector2 nextVec = dirVec.normalized * (float)shipStatusDatas_[(int)ShipStatus.MoveSpeed] * Time.fixedDeltaTime;
-                rigid_.MovePosition(rigid_.position + nextVec);
-                rigid_.velocity = Vector2.zero;
-            }
-
+            //
+            aiState_.AIUpdate();
         }
 
         private void LateUpdate()
@@ -74,14 +64,26 @@ namespace Sinabro
 
             if (target_ == null)
                 return;
-
-
-            spriter_.flipX = target_.position.x > rigid_.position.x;
         }
 
         //
-        public void CleateUnit(EnemyShipEntity enemyShipInfo, HpBarControl hpBar)
+        public void CleateUnit(EnemyShipEntity enemyShipInfo, HpBarControl hpBar, int fleetIndex)
         {
+            //
+            aiType_ = AIType.Normal;
+            aiStateList_.Clear();
+            aiStateList_.Add(new AIPatrolState());
+            aiStateList_.Add(new AIChaseState());
+            aiStateList_.Add(new AIAttackState());
+            aiStateList_.Add(new AIDefenseState());
+            aiStateList_.Add(new AIDeadState());
+            for (int i = 0; i < aiStateList_.Count; ++i)
+            {
+                aiStateList_[i].Initialize(gameObject, false);
+            }
+            aiState_ = aiStateList_[0];
+
+            //
             pooledObject_ = GetComponent<PooledObject>();
 
             //
@@ -89,6 +91,7 @@ namespace Sinabro
 
             //
             hpBar_ = hpBar;
+            fleetIndex_ = fleetIndex;
 
             //
             anim_.runtimeAnimatorController = animControl_[0];
@@ -99,24 +102,26 @@ namespace Sinabro
             shipStatusDatas_[(int)ShipStatus.AP] = enemyShipInfo.Ap;
             shipStatusDatas_[(int)ShipStatus.Aim] = enemyShipInfo.Aim;
             shipStatusDatas_[(int)ShipStatus.CoolTime] = enemyShipInfo.FireCool;
-            shipStatusDatas_[(int)ShipStatus.Range] = enemyShipInfo.Range;
+            shipStatusDatas_[(int)ShipStatus.FireRange] = enemyShipInfo.FireRange;
+            shipStatusDatas_[(int)ShipStatus.SightRange] = enemyShipInfo.SightRange;
             shipStatusDatas_[(int)ShipStatus.DefenseSide] = enemyShipInfo.SideDp;
             shipStatusDatas_[(int)ShipStatus.DefenseTop] = enemyShipInfo.TopDp;
             shipStatusDatas_[(int)ShipStatus.DefenseTorpedo] = enemyShipInfo.TorepedoDp;
             shipStatusDatas_[(int)ShipStatus.MoveSpeed] = enemyShipInfo.MoveSpeed;
             shipStatusDatas_[(int)ShipStatus.Fuel] = enemyShipInfo.Fuel;
             shipStatusDatas_[(int)ShipStatus.Shell] = enemyShipInfo.ShellCnt;
-            scanner_.scanRange_ = (float)shipStatusDatas_[(int)ShipStatus.Range];
+            fireScanner_.scanRange_ = (float)shipStatusDatas_[(int)ShipStatus.FireRange];
+            sightScanner_.scanRange_ = (float)shipStatusDatas_[(int)ShipStatus.SightRange];
             maxHp_ = enemyShipInfo.Hp;
 
             hpBar_.UpdateHp((int)shipStatusDatas_[(int)ShipStatus.HP], maxHp_);
 
             //
             myWeapon_ = new WeaponOneGuns();
-            myWeapon_.CreateWeapon(weaponRoot_, false, (AttackType)enemyShipInfo.AttackType, gameObject);
+            myWeapon_.CreateWeapon(weaponRoot_, false, (AttackType)enemyShipInfo.AttackType, gameObject, fireScanner_);
 
             //
-            spriter_.sprite = Resources.Load<Sprite>("ShipImg/" + enemyShipInfo.ResourceName);
+            sprite_.sprite = Resources.Load<Sprite>("ShipImg/" + enemyShipInfo.ResourceName);
         }
 
 
@@ -160,6 +165,13 @@ namespace Sinabro
         //    Vector3 dirVec = transform.position - playerPos;
         //    rigid_.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
         //}
+
+        //
+        public void ChangeAIState(AIStateID aiState)
+        {
+            aiState_ = aiStateList_[(int)aiState];
+            aiState_.Initialize(gameObject, true);
+        }
 
         //
         private void Dead()
