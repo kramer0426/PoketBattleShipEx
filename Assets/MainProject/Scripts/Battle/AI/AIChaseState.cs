@@ -10,26 +10,18 @@ namespace Sinabro
         private Transform target_;
 
         //
-        public override void Initialize(GameObject owner, bool bPlayer)
+        public override void AIUpdate()
         {
-            myTransform_ = owner.transform;
-            bPlayer_ = bPlayer;
             if (bPlayer_)
             {
-                player_ = owner.GetComponent<Player>();
                 target_ = player_.sightScanner_.nearestTarget_;
             }
             else
             {
-                enemy_ = owner.GetComponent<Enemy>();
                 target_ = enemy_.sightScanner_.nearestTarget_;
             }
-        }
 
-        //
-        public override void AIUpdate()
-        {
-            if (target_ != null)
+            if (target_ == null)
             {
                 if (bPlayer_)
                 {

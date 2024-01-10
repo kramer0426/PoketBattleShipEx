@@ -7,8 +7,6 @@ namespace Sinabro
     public class Enemy : MonoBehaviour
     {
         //
-        public RuntimeAnimatorController[]  animControl_;
-        public Rigidbody2D                  target_;
         private PooledObject                pooledObject_;
         private HpBarControl                hpBar_;
         public Scanner                      fireScanner_;
@@ -19,9 +17,8 @@ namespace Sinabro
 
         //
         public Rigidbody2D     rigid_;
-        private Collider2D      coll_;
         public SpriteRenderer  sprite_;
-        private Animator        anim_;
+        public Animator        anim_;
 
         private WaitForFixedUpdate wait_;
 
@@ -38,10 +35,6 @@ namespace Sinabro
 
         private void Awake()
         {
-            rigid_ = GetComponent<Rigidbody2D>();
-            coll_ = GetComponent<Collider2D>();
-            sprite_ = GetComponent<SpriteRenderer>();
-            anim_ = GetComponent<Animator>();
             wait_ = new WaitForFixedUpdate();
         }
 
@@ -54,15 +47,13 @@ namespace Sinabro
                 return;
 
             //
-            aiState_.AIUpdate();
+            if (aiState_ != null)
+                aiState_.AIUpdate();
         }
 
         private void LateUpdate()
         {
             if (GameManager.Instance.isLive_ == false)
-                return;
-
-            if (target_ == null)
                 return;
         }
 
@@ -87,14 +78,9 @@ namespace Sinabro
             pooledObject_ = GetComponent<PooledObject>();
 
             //
-            target_ = GameManager.Instance.targetPlayer_;
-
-            //
             hpBar_ = hpBar;
             fleetIndex_ = fleetIndex;
 
-            //
-            anim_.runtimeAnimatorController = animControl_[0];
 
             //
             enemyShipInfo_ = enemyShipInfo;
@@ -170,7 +156,9 @@ namespace Sinabro
         public void ChangeAIState(AIStateID aiState)
         {
             aiState_ = aiStateList_[(int)aiState];
-            aiState_.Initialize(gameObject, true);
+            aiState_.Initialize(gameObject, false);
+
+            Debug.Log("Enemy State : " + aiState);
         }
 
         //

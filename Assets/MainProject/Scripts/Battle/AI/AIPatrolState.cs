@@ -106,9 +106,13 @@ namespace Sinabro
                         patrolPos_ = originPos_;
                     }
                 }
+
+                //
+                if (enemy_.sightScanner_.nearestTarget_ != null)
+                {
+                    enemy_.ChangeAIState(AIStateID.Chasing);
+                }
             }
-
-
         }
     }
 }

@@ -13,8 +13,6 @@ namespace Sinabro
         public Transform[] enemyStartPositions_;
         public Transform focusPlayer_;
 
-        public Rigidbody2D targetPlayer_;
-
         //
         [Header("# Game Control")]
         public bool isLive_;
@@ -70,7 +68,6 @@ namespace Sinabro
                 playerInst.transform.position = playerStartPositions_[0].position;
 
                 focusPlayer_ = playerInst.transform;
-                targetPlayer_ = playerInst.GetComponent<Rigidbody2D>();
 
                 MyShipData shipData = DataMgr.Instance.myInfo_g.GetMyShip(2);
                 if (shipData != null)

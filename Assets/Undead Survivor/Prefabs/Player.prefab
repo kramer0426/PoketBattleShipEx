@@ -311,8 +311,8 @@ MonoBehaviour:
   fireScanner_: {fileID: 3944301770753672055}
   sightScanner_: {fileID: 8644370954603580193}
   aiType_: 0
-  rigidBody_: {fileID: 0}
-  sprite_: {fileID: 0}
+  rigidBody_: {fileID: 6272891078359912782}
+  sprite_: {fileID: 6272891078359912769}
   weaponRoot_: {fileID: 6272891077141477482}
   shipData_:
     shipInfo_:

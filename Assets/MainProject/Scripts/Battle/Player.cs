@@ -61,8 +61,6 @@ namespace Sinabro
 
             //
             speed_ = 3.0f;
-            rigidBody_ = GetComponent<Rigidbody2D>();
-            sprite_ = GetComponent<SpriteRenderer>();
             anim_ = GetComponent<Animator>();
 
             //
@@ -90,6 +88,8 @@ namespace Sinabro
         {
             aiState_ = aiStateList_[(int)aiState];
             aiState_.Initialize(gameObject, true);
+
+            Debug.Log("Player State : " + aiState);
         }
 
         //
@@ -114,7 +114,8 @@ namespace Sinabro
                 return;
 
             //
-            aiState_.AIUpdate();
+            if (aiState_ != null)
+                aiState_.AIUpdate();
         }
 
         private void LateUpdate()
